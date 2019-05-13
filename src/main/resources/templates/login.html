@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/asserts/css/signin.css}" th:rel="stylesheet">
+    <link th:href="@{/asserts/css/bootstrap.min.css}" th:rel="stylesheet">
+    <link th:rel="stylesheet" th:href="@{/webjars/layui/2.4.5/css/layui.css}" th:media="all">
+    <script type="text/javascript" th:src="@{/webjars/layui/2.4.5/layui.js}"></script>
+    <!--<script type="text/javascript" th:src="@{/webjars/layui/2.4.5/layui.all.js}"></script>-->
+    <script type="text/javascript" th:src="@{/asserts/js/jquery-3.3.1.min.js}"></script>
+</head>
+
+<body class="text-center">
+<form class="layui-form form-signin" th:action="@{/admin/login}" method="post">
+    <img class="mb-4" th:src="@{/asserts/img/bootstrap-solid.svg}" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">后台管理系统</h1>
+    <label class="sr-only">用户名</label>
+    <input type="text" id="username" class="layui-input form-control" name="adminName" placeholder="用户名" autofocus="" lay-verify="username" autocomplete="off">
+    <label class="sr-only">密码</label>
+    <input type="password" id="password" class="layui-input form-control" name="adminPassword" placeholder="密码" lay-verify="password" autocomplete="off">
+    <button id="login" class="layui-btn layui-btn-normal btn btn-lg btn-primary btn-block" lay-submit lay-filter="login">登录</button>
+    <p class="mt-5 mb-3 text-muted">© 2018-2019</p>
+    <input id="msg" type="hidden" th:value="${msg}" th:if="${not #strings.isEmpty(msg)}">
+</form>
+
+<script>
+
+    layui.use(['form','layer'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+
+        //自定义验证规则
+        form.verify({
+            username: function (value) {
+                if (value.length == 0 || value == "") {
+                    return "用户名不能为空哦!";
+                }
+            },
+
+            password: function (value) {
+                if (value.length == 0 || value == "") {
+                    return "密码不能为空哦!";
+                }
+            }
+        });
+
+        //登录失败后返回的信息
+        var msg = $("#msg").val();
+        if (msg != null && msg != "") {
+            layer.open({
+                title: "提示",
+                content: msg,
+                icon: 5
+            });
+        }
+
+    });
+</script>
+
+</body>
+
+</html>

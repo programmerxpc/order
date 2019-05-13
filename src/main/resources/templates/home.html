@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>订单查询</title>
+    <script type="text/javascript" th:src="@{/asserts/js/jquery-3.3.1.min.js}"></script>
+    <link th:rel="stylesheet" th:href="@{/webjars/layui/2.4.5/css/layui.css}" th:media="all">
+    <script type="text/javascript" th:src="@{/webjars/layui/2.4.5/layui.js}"></script>
+</head>
+<body style="font-size:12px; width:96%; margin:auto">
+
+<h1 style="width: auto">订单信息</h1>
+
+<table class="layui-hide" id="orderTable" style="width: auto"></table>
+
+<script type="text/html" id="toolbarDemo"> </script>
+
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+
+        //渲染表格
+        table.render({
+            elem: "#orderTable",
+            url: "/order/admin/orderList",
+            height: "full-20",
+            size: "sm",
+            cols: [
+                [
+                    {type: 'checkbox', fixed: 'left'},
+                    {field:"orderId", title:"订单编号", width:90, fixed: 'left'},
+                    {field:"username", title:"用户", width:90},
+                    {field:"productId", title:"商品编号", width:90},
+                    {field:"productName", title:"商品名称", width:90},
+                    {field:"productQuantity", title:"商品数量", width:90},
+                    {field:"orderAmount", title:"订单总额", width:90},
+                    {field:"createTime", title:"订单创建时间", width:150},
+                    {field:"updateTime", title:"订单修改时间", width:150}
+                ]
+            ],
+            response: {
+                statusName: 'code' //数据状态的字段名称，默认：code
+                ,statusCode: 0 //成功的状态码，默认：0
+                ,msgName: 'msg' //状态信息的字段名称，默认：msg
+                ,countName: 'count' //数据总数的字段名称，默认：count
+                ,dataName: 'data' //数据列表的字段名称，默认：data
+            },
+            id: 'testReload',
+            toolbar: '#toolbarDemo',
+            defaultToolbar:  ['filter', 'print', 'exports'],
+            page: true,
+            limit: 100,
+            limits:[100,200,300],
+            title:"订单表"
+        });
+    });
+</script>
+
+</body>
+</html>

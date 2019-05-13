@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品类别添加</title>
+    <script type="text/javascript" th:src="@{/asserts/js/jquery-3.3.1.min.js}"></script>
+    <link th:rel="stylesheet" th:href="@{/webjars/layui/2.4.5/css/layui.css}" th:media="all">
+    <script type="text/javascript" th:src="@{/webjars/layui/2.4.5/layui.js}"></script>
+</head>
+<body style="font-size:12px; width:90%; margin:auto">
+
+<div class="layui-inline" style="margin-top: 20px">
+    <form class="layui-form" id="addForm" th:action="@{/admin/addProductCategory}" method="post">
+        <table class="layui-table" style="width: auto">
+            <tbody>
+            <tr>
+                <td>类别名称:</td>
+                <td>
+                    <input type="text" class="layui-input" name="categoryId" id='categoryId' autocomplete="off"  placeholder="请输入类别编号" required>
+                </td>
+                <td>
+                    <input type="text" class="layui-input" name="categoryName" id='categoryName' autocomplete="off"  placeholder="请输入类别名称" required>
+                </td>
+                <td>
+                    <button class="layui-btn" id="add">添加</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<script>
+    layui.use(['table','layer','form'],function () {
+        //点击添加按钮
+        $("#add").on("click",function () {
+            if ($.trim($("#categoryId").val()) == ""){
+                layer.open({
+                    title:"提示",
+                    content:"类别编号不能为空!",
+                    icon:0,
+                    offset:"t"
+                });
+                return false;
+            }else if($.trim($("#categoryName").val()) == ""){
+                layer.open({
+                    title:"提示",
+                    content:"类别名称不能为空!",
+                    icon:0,
+                    offset:"t"
+                });
+                return false;
+            }else {
+                $("#addForm").submit();
+                return false;
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
