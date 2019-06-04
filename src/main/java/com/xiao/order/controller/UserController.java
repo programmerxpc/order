@@ -1,8 +1,11 @@
 package com.xiao.order.controller;
 
 import com.xiao.order.model.Orders;
+import com.xiao.order.model.ProductCategory;
+import com.xiao.order.model.ProductInfo;
 import com.xiao.order.model.UserInfo;
 import com.xiao.order.service.OrdersService;
+import com.xiao.order.service.ProductCategoryService;
 import com.xiao.order.service.ProductInfoService;
 import com.xiao.order.service.UserInfoService;
 import com.xiao.order.vo.ProductVo;
@@ -29,6 +32,9 @@ public class UserController {
 
     @Autowired
     private ProductInfoService productInfoService;
+
+    @Autowired
+    private ProductCategoryService productCategoryService;
 
     @GetMapping(value = "register")
     public ResultVo register(UserInfo userInfo){
@@ -149,6 +155,67 @@ public class UserController {
         }else {
             resultVo.setCode(1);
             resultVo.setMsg("商品不存在!");
+        }
+
+        return resultVo;
+    }
+
+    //获取所有商品
+    @GetMapping("getAllProduct")
+    public ResultVo getAllProduct(){
+        ResultVo resultVo = new ResultVo();
+
+        List<ProductInfo> productList = productInfoService.getAll();
+        if (productList != null && productList.size() > 0){
+            //商品存在
+            resultVo.setCode(0);
+            resultVo.setMsg("success!");
+            resultVo.setData(productList);
+        }else {
+            resultVo.setCode(1);
+            resultVo.setMsg("暂无相关信息!");
+        }
+
+        return resultVo;
+    }
+
+    //获取所有商品类别
+    @GetMapping("getAllProductCategory")
+    public ResultVo getAllProductCategory(){
+        ResultVo resultVo = new ResultVo();
+
+        List<ProductCategory> productCategoryList = productCategoryService.getAll();
+        if (productCategoryList != null){
+            resultVo.setCode(0);
+            resultVo.setMsg("success!");
+            resultVo.setData(productCategoryList);
+        }else {
+            resultVo.setCode(1);
+            resultVo.setMsg("暂无相关信息!");
+        }
+
+        return resultVo;
+    }
+
+    //获取用户个人信息
+    @GetMapping("getUserInfo")
+    public ResultVo getUserInfo(UserInfo userInfo){
+        ResultVo resultVo = new ResultVo();
+        UserVo userVo = new UserVo();
+
+        UserInfo userInfo_result = userInfoService.getByUsername(userInfo);
+        if (userInfo_result != null){
+            userVo.setUsername(userInfo_result.getUsername());
+            userVo.setPhone(userInfo_result.getPhone());
+            userVo.setEmail(userInfo_result.getEmail());
+            userVo.setAddress(userInfo_result.getAddress());
+
+            resultVo.setCode(0);
+            resultVo.setMsg("success!");
+            resultVo.setData(userVo);
+        }else {
+            resultVo.setCode(1);
+            resultVo.setMsg("暂无相关数据!");
         }
 
         return resultVo;

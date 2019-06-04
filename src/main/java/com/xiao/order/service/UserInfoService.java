@@ -23,4 +23,11 @@ public interface UserInfoService {
      */
     UserInfo login(UserInfo userInfo);
 
+    /**
+     * 用户查询个人信息
+     * @param userinfo 包含参数：username
+     * @return
+     */
+    UserInfo getByUsername(UserInfo userinfo);
+
 }

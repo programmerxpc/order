@@ -42,4 +42,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public UserInfo login(UserInfo userInfo) {
         return userInfoMapper.getByUsernameAndPassword(userInfo);
     }
+
+    @Override
+    public UserInfo getByUsername(UserInfo userinfo) {
+        return userInfoMapper.getByUsername(userinfo);
+    }
 }

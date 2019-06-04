@@ -56,4 +56,5 @@ public class UserInfoMapperTest {
         System.out.println("根据用户名和密码获取用户：" + user);
 
     }
+
 }
